@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sai Teja Nalanagula — Java Backend Developer</title>
+  <style>
+    :root {
+      --bg: #0a0d14;
+      --bg2: #0f1320;
+      --bg3: #141929;
+      --card: #161c2e;
+      --border: #1e2a45;
+      --accent: #4f8ef7;
+      --accent2: #7c5ff5;
+      --accent3: #00d4aa;
+      --text: #e8eaf0;
+      --muted: #8892a4;
+      --tag-bg: #1a2540;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ─── SCROLLBAR ─────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ─── NAV ────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(10,13,20,.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem;
+    }
+    .nav-logo {
+      font-size: 1.15rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: .875rem;
+      letter-spacing: .03em; transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ─── HERO ────────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 8rem 2rem 6rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 500px; border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(79,142,247,.15) 0%, rgba(124,95,245,.08) 40%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content { text-align: center; position: relative; max-width: 780px; }
+    .hero-badge {
+      display: inline-block; margin-bottom: 1.5rem;
+      padding: .35rem 1rem; border-radius: 999px;
+      background: rgba(79,142,247,.12); border: 1px solid rgba(79,142,247,.3);
+      color: var(--accent); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 800; line-height: 1.1; margin-bottom: .6rem;
+      letter-spacing: -.02em;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 50%, var(--accent3) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-title {
+      font-size: clamp(1rem, 2.5vw, 1.35rem); color: var(--muted);
+      margin-bottom: 1.5rem; font-weight: 400;
+    }
+    .hero-summary {
+      font-size: 1rem; color: var(--muted); max-width: 600px; margin: 0 auto 2.5rem;
+      line-height: 1.75;
+    }
+    .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
+    .btn {
+      padding: .7rem 1.6rem; border-radius: 8px; font-size: .9rem;
+      font-weight: 600; text-decoration: none; transition: all .2s; cursor: pointer;
+      display: inline-flex; align-items: center; gap: .5rem;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; border: none;
+    }
+    .btn-primary:hover { opacity: .9; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(79,142,247,.3); }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+    .hero-stats {
+      display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-size: 1.75rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent3));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-label { font-size: .78rem; color: var(--muted); letter-spacing: .05em; text-transform: uppercase; }
+
+    /* ─── SECTIONS ────────────────────────────────────────── */
+    section { padding: 5rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 3.5rem; }
+    .section-tag {
+      display: inline-block; margin-bottom: .75rem;
+      color: var(--accent); font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 600;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; margin-bottom: .75rem;
+    }
+    .section-sub { color: var(--muted); font-size: 1rem; max-width: 520px; margin: 0 auto; }
+    .divider {
+      width: 48px; height: 3px; margin: 1rem auto 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 2px;
+    }
+
+    /* ─── SKILLS ─────────────────────────────────────────── */
+    #skills { background: var(--bg2); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .skill-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 1.5rem;
+      transition: border-color .2s, transform .2s;
+    }
+    .skill-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .skill-card-icon { font-size: 1.75rem; margin-bottom: .75rem; }
+    .skill-card-title { font-size: .9rem; font-weight: 700; margin-bottom: .75rem; color: var(--accent); letter-spacing: .02em; }
+    .tags { display: flex; flex-wrap: wrap; gap: .45rem; }
+    .tag {
+      background: var(--tag-bg); color: var(--muted);
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: .2rem .55rem; font-size: .73rem;
+    }
+
+    /* ─── EXPERIENCE ─────────────────────────────────────── */
+    #experience { background: var(--bg); }
+    .timeline { position: relative; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 8px; bottom: 0;
+      width: 2px; background: linear-gradient(180deg, var(--accent), var(--accent2), transparent);
+      border-radius: 2px;
+    }
+    .exp-item {
+      padding-left: 2.25rem; margin-bottom: 3rem; position: relative;
+    }
+    .exp-dot {
+      position: absolute; left: -6px; top: 6px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: 2px solid var(--bg);
+    }
+    .exp-header { display: flex; flex-wrap: wrap; align-items: flex-start; gap: .5rem; margin-bottom: .35rem; }
+    .exp-role { font-size: 1.1rem; font-weight: 700; }
+    .exp-company {
+      background: linear-gradient(135deg, var(--accent), var(--accent3));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      font-weight: 700;
+    }
+    .exp-period {
+      margin-left: auto; font-size: .78rem; color: var(--muted);
+      background: var(--tag-bg); border: 1px solid var(--border); border-radius: 6px;
+      padding: .2rem .6rem; white-space: nowrap;
+    }
+    .exp-sub { color: var(--muted); font-size: .85rem; margin-bottom: .85rem; font-style: italic; }
+    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+    .exp-bullets li {
+      color: var(--muted); font-size: .875rem; padding-left: 1rem; position: relative;
+    }
+    .exp-bullets li::before {
+      content: '→'; position: absolute; left: 0; color: var(--accent);
+    }
+    .exp-bullets li strong { color: var(--text); }
+
+    /* ─── EDUCATION ──────────────────────────────────────── */
+    #education { background: var(--bg2); }
+    .edu-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 2rem 2.5rem;
+      display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap;
+      max-width: 720px;
+    }
+    .edu-icon { font-size: 2.5rem; flex-shrink: 0; }
+    .edu-degree { font-size: 1.2rem; font-weight: 700; margin-bottom: .3rem; }
+    .edu-school { color: var(--accent); font-weight: 600; margin-bottom: .3rem; }
+    .edu-meta { color: var(--muted); font-size: .875rem; }
+    .gpa-badge {
+      margin-top: .6rem; display: inline-block;
+      padding: .3rem .75rem; border-radius: 6px;
+      background: rgba(0,212,170,.12); border: 1px solid rgba(0,212,170,.3);
+      color: var(--accent3); font-size: .8rem; font-weight: 700;
+    }
+
+    /* ─── PROJECTS ───────────────────────────────────────── */
+    #projects { background: var(--bg); }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 1.5rem; }
+    .project-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 1.75rem; display: flex; flex-direction: column; gap: 1rem;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+      position: relative; overflow: hidden;
+    }
+    .project-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0; transition: opacity .2s;
+    }
+    .project-card:hover { border-color: rgba(79,142,247,.4); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(79,142,247,.1); }
+    .project-card:hover::before { opacity: 1; }
+    .project-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+    .project-icon { font-size: 1.75rem; flex-shrink: 0; }
+    .project-links { display: flex; gap: .5rem; }
+    .project-link {
+      display: inline-flex; align-items: center; gap: .3rem;
+      color: var(--muted); text-decoration: none; font-size: .78rem;
+      padding: .25rem .6rem; border-radius: 6px; border: 1px solid var(--border);
+      transition: all .2s;
+    }
+    .project-link:hover { color: var(--accent); border-color: var(--accent); }
+    .project-name { font-size: 1.05rem; font-weight: 700; margin-bottom: .25rem; }
+    .project-category { font-size: .72rem; color: var(--accent2); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .project-desc { color: var(--muted); font-size: .86rem; line-height: 1.65; flex: 1; }
+    .project-highlights { list-style: none; display: flex; flex-direction: column; gap: .35rem; }
+    .project-highlights li { font-size: .8rem; color: var(--muted); padding-left: 1rem; position: relative; }
+    .project-highlights li::before { content: '▸'; position: absolute; left: 0; color: var(--accent3); }
+    .project-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: auto; padding-top: .5rem; border-top: 1px solid var(--border); }
+    .project-tag {
+      font-size: .7rem; padding: .18rem .5rem; border-radius: 5px;
+      background: rgba(79,142,247,.1); color: var(--accent); border: 1px solid rgba(79,142,247,.2);
+    }
+
+    /* ─── CONTACT ─────────────────────────────────────────── */
+    #contact { background: var(--bg2); }
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; max-width: 700px; margin: 0 auto; }
+    .contact-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 1.5rem; text-align: center; text-decoration: none;
+      transition: all .2s; display: flex; flex-direction: column; align-items: center; gap: .6rem;
+    }
+    .contact-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(79,142,247,.15); }
+    .contact-icon { font-size: 1.75rem; }
+    .contact-label { font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+    .contact-val { font-size: .88rem; color: var(--text); font-weight: 600; }
+
+    /* ─── FOOTER ─────────────────────────────────────────── */
+    footer {
+      background: var(--bg); border-top: 1px solid var(--border);
+      padding: 2rem; text-align: center; color: var(--muted); font-size: .8rem;
+    }
+
+    /* ─── ANIMATIONS ─────────────────────────────────────── */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hero-stats { gap: 2rem; }
+      .timeline::before { display: none; }
+      .exp-item { padding-left: 0; }
+      .exp-dot { display: none; }
+      .edu-card { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ──────────────────────────────────────────────── -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">ST·N</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ─── HERO ──────────────────────────────────────────────── -->
+<section class="hero" id="about">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Available for opportunities</div>
+    <h1>Leela Phanidhar<br/><span>Sai Teja Nalanagula</span></h1>
+    <p class="hero-title">Java Backend Developer &nbsp;·&nbsp; MLOps &nbsp;·&nbsp; Full-Stack</p>
+    <p class="hero-summary">
+      5+ years building scalable microservices with Java &amp; Spring Boot at Stripe and Netflix.
+      MS Computer Science at Saint Louis University (4.0 GPA). Passionate about clean architecture,
+      distributed systems, and AI-powered applications.
+    </p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="#projects">View Projects</a>
+      <a class="btn btn-outline" href="https://www.linkedin.com/in/sai-teja-nalanagula-6251753a8/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="btn btn-outline" href="mailto:leela.nalanagula1912@gmail.com">Email Me</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">5+</div><div class="stat-label">Years Experience</div></div>
+      <div class="stat"><div class="stat-num">50M+</div><div class="stat-label">Transactions / Month</div></div>
+      <div class="stat"><div class="stat-num">4.0</div><div class="stat-label">GPA (MS CS)</div></div>
+      <div class="stat"><div class="stat-num">90%+</div><div class="stat-label">Test Coverage</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SKILLS ────────────────────────────────────────────── -->
+<section id="skills">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">What I know</div>
+      <h2 class="section-title">Skills &amp; Technologies</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card fade-in">
+        <div class="skill-card-icon">☕</div>
+        <div class="skill-card-title">Core Languages</div>
+        <div class="tags">
+          <span class="tag">Java 8+</span><span class="tag">Java 21</span>
+          <span class="tag">JavaScript ES6+</span><span class="tag">SQL</span><span class="tag">Python</span>
+        </div>
+      </div>
+      <div class="skill-card fade-in">
+        <div class="skill-card-icon">⚙️</div>
+        <div class="skill-card-title">Backend &amp; APIs</div>
+        <div class="tags">
+          <span class="tag">Spring Boot</span><span class="tag">Spring MVC</span>
+          <span class="tag">Spring Security</span><span class="tag">Hibernate/JPA</span>
+          <span class="tag">REST APIs</span><span class="tag">Microservices</span>
+          <span class="tag">JWT</span><span class="tag">OAuth 2.0</span>
+        </div>
+      </div>
+      <div class="skill-card fade-in">
+        <div class="skill-card-icon">🗄️</div>
+        <div class="skill-card-title">Databases &amp; Storage</div>
+        <div class="tags">
+          <span class="tag">PostgreSQL</span><span class="tag">MySQL</span>
+          <span class="tag">Redis</span><span class="tag">DynamoDB</span>
+          <span class="tag">MongoDB</span><span class="tag">FAISS</span>
+          <span class="tag">Query Optimization</span>
+        </div>
+      </div>
+      <div class="skill-card fade-in">
+        <div class="skill-card-icon">☁️</div>
+        <div class="skill-card-title">Cloud &amp; DevOps</div>
+        <div class="tags">
+          <span class="tag">AWS EC2/S3/EKS</span><span class="tag">Lambda</span>
+          <span class="tag">Docker</span><span class="tag">Kubernetes</span>
+          <span class="tag">GitHub Actions</span><span class="tag">Jenkins</span>
+          <span class="tag">CI/CD</span>
+        </div>
+      </div>
+      <div class="skill-card fade-in">
+        <div class="skill-card-icon">🤖</div>
+        <div class="skill-card-title">AI / MLOps</div>
+        <div class="tags">
+          <span class="tag">LangChain</span><span class="tag">HuggingFace</span>
+          <span class="tag">XGBoost</span><span class="tag">MLflow</span>
+          <span class="tag">FastAPI</span><span class="tag">Evidently AI</span>
+          <span class="tag">RAG</span><span class="tag">RAGAS</span>
+        </div>
+      </div>
+      <div class="skill-card fade-in">
+        <div class="skill-card-icon">🌐</div>
+        <div class="skill-card-title">Frontend &amp; Testing</div>
+        <div class="tags">
+          <span class="tag">React.js</span><span class="tag">HTML5/CSS3</span>
+          <span class="tag">JUnit</span><span class="tag">Mockito</span>
+          <span class="tag">Postman</span><span class="tag">Integration Testing</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── EXPERIENCE ─────────────────────────────────────────── -->
+<section id="experience">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Career</div>
+      <h2 class="section-title">Work Experience</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="timeline">
+
+      <div class="exp-item fade-in">
+        <div class="exp-dot"></div>
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">Java Backend Developer &nbsp;—&nbsp; <span class="exp-company">Netflix</span></div>
+            <div class="exp-sub">Cloud-Native Streaming Platform</div>
+          </div>
+          <div class="exp-period">Jun 2025 – Present</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Designed scalable backend services with <strong>Java &amp; Spring Boot</strong>, integrating REST APIs into high-traffic streaming infrastructure.</li>
+          <li>Improved system performance <strong>30%</strong> by refactoring legacy code and optimizing SQL/NoSQL queries.</li>
+          <li>Integrated services with <strong>AWS EC2, S3, EKS</strong> for auto-scaling, reducing infrastructure costs by 20%.</li>
+          <li>Wrote <strong>200+ unit &amp; integration tests</strong> (JUnit/Mockito), pushing code coverage to 90%+.</li>
+          <li>Delivered <strong>8 end-to-end features</strong> in Agile sprints, reducing post-release defects by 22%.</li>
+          <li>Cut incident resolution time by <strong>35%</strong> through proactive production monitoring and observability tooling.</li>
+        </ul>
+      </div>
+
+      <div class="exp-item fade-in">
+        <div class="exp-dot"></div>
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">Java Developer &nbsp;—&nbsp; <span class="exp-company">Stripe</span></div>
+            <div class="exp-sub">PCI-Compliant Payments Infrastructure · India</div>
+          </div>
+          <div class="exp-period">Jul 2019 – Dec 2023</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Built and maintained <strong>25+ RESTful APIs</strong> handling <strong>50M+ transactions/month</strong> at 99.99% reliability.</li>
+          <li>Reduced payment failures by <strong>28%</strong> via encryption, tokenization, and fraud-check workflows.</li>
+          <li>Optimized MySQL/PostgreSQL queries, improving transaction processing speed by <strong>35%</strong>.</li>
+          <li>Architected <strong>20+ microservices</strong> enabling independent scaling and cutting release risk by 30%.</li>
+          <li>Integrated third-party banking APIs across <strong>15 international regions</strong>, boosting cross-border payment success by 22%.</li>
+          <li>Automated <strong>CI/CD pipelines</strong> with Jenkins &amp; Git, slashing deployment time by 45%.</li>
+          <li>Maintained <strong>PCI-DSS compliance</strong> with zero critical audit findings across 4+ years.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── EDUCATION ──────────────────────────────────────────── -->
+<section id="education">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Academic</div>
+      <h2 class="section-title">Education</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="edu-card fade-in">
+      <div class="edu-icon">🎓</div>
+      <div>
+        <div class="edu-degree">Master of Science in Computer Science</div>
+        <div class="edu-school">Saint Louis University, St. Louis, MO</div>
+        <div class="edu-meta">January 2024 – December 2025</div>
+        <div class="gpa-badge">GPA: 4.0 / 4.0</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROJECTS ───────────────────────────────────────────── -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Built by me</div>
+      <h2 class="section-title">Projects</h2>
+      <p class="section-sub">A selection of personal and academic projects spanning AI, MLOps, full-stack web, and systems.</p>
+      <div class="divider"></div>
+    </div>
+    <div class="projects-grid">
+
+      <!-- ChurnOps -->
+      <div class="project-card fade-in">
+        <div class="project-header">
+          <div class="project-icon">🔄</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/nlp-saiteja/churnops-mlops-pipeline" target="_blank" rel="noopener">GitHub ↗</a>
+          </div>
+        </div>
+        <div>
+          <div class="project-category">MLOps · AI</div>
+          <div class="project-name">ChurnOps — MLOps Pipeline</div>
+        </div>
+        <p class="project-desc">Production-grade end-to-end MLOps pipeline for telecom customer churn prediction. Covers data ingestion → training → serving → Kubernetes deployment → drift monitoring → CI/CD — all running locally at zero cloud cost.</p>
+        <ul class="project-highlights">
+          <li>XGBoost classifier · ROC-AUC 0.83 · Recall 0.70</li>
+          <li>90/10 Kubernetes canary deploy with auto-rollback</li>
+          <li>Evidently AI drift alerts + weekly retraining via GitHub Actions</li>
+          <li>FastAPI REST API + MLflow experiment registry</li>
+        </ul>
+        <div class="project-tags">
+          <span class="project-tag">Python</span><span class="project-tag">XGBoost</span>
+          <span class="project-tag">FastAPI</span><span class="project-tag">MLflow</span>
+          <span class="project-tag">Docker</span><span class="project-tag">Kubernetes</span>
+          <span class="project-tag">GitHub Actions</span>
+        </div>
+      </div>
+
+      <!-- RAG -->
+      <div class="project-card fade-in">
+        <div class="project-header">
+          <div class="project-icon">🧠</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/nlp-saiteja/rag-doc-qa-system" target="_blank" rel="noopener">GitHub ↗</a>
+          </div>
+        </div>
+        <div>
+          <div class="project-category">AI · NLP · RAG</div>
+          <div class="project-name">RAG Document Q&amp;A System</div>
+        </div>
+        <p class="project-desc">Upload any PDF/TXT/DOCX and ask plain-English questions — get cited answers referencing exact source pages. Built entirely on free, local, open-source tools with no OpenAI API key required.</p>
+        <ul class="project-highlights">
+          <li>FAISS semantic search with source-page citations</li>
+          <li>Streamlit UI + FastAPI backend + Docker Compose (3 services)</li>
+          <li>RAGAS evaluation pipeline tracked via MLflow</li>
+          <li>flan-t5-base local inference · all-MiniLM-L6-v2 embeddings</li>
+        </ul>
+        <div class="project-tags">
+          <span class="project-tag">LangChain</span><span class="project-tag">HuggingFace</span>
+          <span class="project-tag">FAISS</span><span class="project-tag">FastAPI</span>
+          <span class="project-tag">Streamlit</span><span class="project-tag">Docker</span>
+        </div>
+      </div>
+
+      <!-- SLU Reuse -->
+      <div class="project-card fade-in">
+        <div class="project-header">
+          <div class="project-icon">♻️</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/git-voo/slu_reuse" target="_blank" rel="noopener">GitHub ↗</a>
+          </div>
+        </div>
+        <div>
+          <div class="project-category">Full-Stack · Web App</div>
+          <div class="project-name">SLU Reuse — Campus Donation Platform</div>
+        </div>
+        <p class="project-desc">Full-stack web platform connecting Saint Louis University students to donate and claim surplus items (furniture, electronics, clothing) at semester's end — promoting campus sustainability.</p>
+        <ul class="project-highlights">
+          <li>SLU email verification · JWT auth · real-time chat</li>
+          <li>BLIP AI image captioning via Python microservice</li>
+          <li>Waitlist system · admin CMS · location-based sorting</li>
+          <li>GitHub Actions CI/CD to production</li>
+        </ul>
+        <div class="project-tags">
+          <span class="project-tag">React</span><span class="project-tag">Node.js</span>
+          <span class="project-tag">Express</span><span class="project-tag">MongoDB</span>
+          <span class="project-tag">JWT</span><span class="project-tag">Docker</span>
+          <span class="project-tag">Python/BLIP</span>
+        </div>
+      </div>
+
+      <!-- SmartFarm API -->
+      <div class="project-card fade-in">
+        <div class="project-header">
+          <div class="project-icon">🌱</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/nlp-saiteja/smartfarm-api" target="_blank" rel="noopener">GitHub ↗</a>
+          </div>
+        </div>
+        <div>
+          <div class="project-category">Backend · REST API</div>
+          <div class="project-name">SmartFarm API</div>
+        </div>
+        <p class="project-desc">RESTful API for managing IoT sensors and environmental readings. Demonstrates Express.js fundamentals, full CRUD operations, advanced filtering, pagination, and centralized error handling.</p>
+        <ul class="project-highlights">
+          <li>Nested routes: sensors → readings with full CRUD</li>
+          <li>Multi-criteria filtering: type, value range, ISO 8601 timestamps</li>
+          <li>Pagination with totalItems / totalPages / hasNext / hasPrev</li>
+          <li>Joi validation · NODE_ENV-aware error responses</li>
+        </ul>
+        <div class="project-tags">
+          <span class="project-tag">Node.js</span><span class="project-tag">Express</span>
+          <span class="project-tag">Joi</span><span class="project-tag">REST API</span>
+        </div>
+      </div>
+
+      <!-- Mini Insta -->
+      <div class="project-card fade-in">
+        <div class="project-header">
+          <div class="project-icon">📸</div>
+          <div class="project-links">
+            <a class="project-link" href="https://nlp-saiteja.github.io/mini-insta/" target="_blank" rel="noopener">Live ↗</a>
+            <a class="project-link" href="https://github.com/nlp-saiteja/mini-insta" target="_blank" rel="noopener">GitHub ↗</a>
+          </div>
+        </div>
+        <div>
+          <div class="project-category">Frontend · React</div>
+          <div class="project-name">Mini Insta — SLU-stagram</div>
+        </div>
+        <p class="project-desc">React-based Instagram clone with social feed, likes, comments, user profiles, post composer, and full localStorage persistence. Deployed on GitHub Pages.</p>
+        <ul class="project-highlights">
+          <li>React 18 + React Router v6 with HashRouter for SPA routing</li>
+          <li>Per-post independent like state with comment system</li>
+          <li>User profile pages (/u/:handle) with feed filtering</li>
+          <li>Full data persistence across browser refreshes</li>
+        </ul>
+        <div class="project-tags">
+          <span class="project-tag">React 18</span><span class="project-tag">React Router</span>
+          <span class="project-tag">Vite</span><span class="project-tag">localStorage</span>
+          <span class="project-tag">GitHub Pages</span>
+        </div>
+      </div>
+
+      <!-- Farmer Game -->
+      <div class="project-card fade-in">
+        <div class="project-header">
+          <div class="project-icon">🎮</div>
+          <div class="project-links">
+            <a class="project-link" href="https://nlp-saiteja.github.io/farmer-game/" target="_blank" rel="noopener">Play ↗</a>
+            <a class="project-link" href="https://github.com/nlp-saiteja/farmer-game" target="_blank" rel="noopener">GitHub ↗</a>
+          </div>
+        </div>
+        <div>
+          <div class="project-category">Game · Canvas · JavaScript</div>
+          <div class="project-name">Farmer Game</div>
+        </div>
+        <p class="project-desc">Modular ES6 browser game built on the HTML5 Canvas API. Race an AI farmer to collect crops before time runs out across 3 escalating difficulty levels.</p>
+        <ul class="project-highlights">
+          <li>AI competitor with pathfinding that targets high-value crops</li>
+          <li>Spritesheet animation · scarecrow obstacles · power-ups</li>
+          <li>3-level progression with external config.json</li>
+          <li>Zero dependencies · pure ES6 modules · no build step</li>
+        </ul>
+        <div class="project-tags">
+          <span class="project-tag">JavaScript ES6</span><span class="project-tag">Canvas API</span>
+          <span class="project-tag">OOP</span><span class="project-tag">GitHub Pages</span>
+        </div>
+      </div>
+
+      <!-- Pantheon -->
+      <div class="project-card fade-in">
+        <div class="project-header">
+          <div class="project-icon">🌐</div>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/nlp-saiteja/Pantheon_Assignment" target="_blank" rel="noopener">GitHub ↗</a>
+          </div>
+        </div>
+        <div>
+          <div class="project-category">Networking · Research</div>
+          <div class="project-name">Pantheon — Congestion Control Analysis</div>
+        </div>
+        <p class="project-desc">Reproduced Stanford Pantheon framework experiments to compare TCP congestion control algorithms (Cubic, BBR, Vegas) under emulated network conditions using MahiMahi.</p>
+        <ul class="project-highlights">
+          <li>Two network configs: 50 Mbps/10ms RTT vs 1 Mbps/200ms RTT</li>
+          <li>Custom MahiMahi trace file generation</li>
+          <li>Comparative analysis of 3 TCP CC algorithms</li>
+          <li>Full reproducibility documentation included</li>
+        </ul>
+        <div class="project-tags">
+          <span class="project-tag">Python</span><span class="project-tag">MahiMahi</span>
+          <span class="project-tag">TCP/IP</span><span class="project-tag">Linux Networking</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ─────────────────────────────────────────────── -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Get in touch</div>
+      <h2 class="section-title">Contact</h2>
+      <p class="section-sub">Open to full-time roles, internships, and interesting collaborations.</p>
+      <div class="divider"></div>
+    </div>
+    <div class="contact-grid">
+      <a class="contact-card" href="mailto:leela.nalanagula1912@gmail.com">
+        <div class="contact-icon">✉️</div>
+        <div class="contact-label">Email</div>
+        <div class="contact-val">leela.nalanagula1912<br/>@gmail.com</div>
+      </a>
+      <a class="contact-card" href="https://www.linkedin.com/in/sai-teja-nalanagula-6251753a8/" target="_blank" rel="noopener">
+        <div class="contact-icon">💼</div>
+        <div class="contact-label">LinkedIn</div>
+        <div class="contact-val">sai-teja-nalanagula</div>
+      </a>
+      <a class="contact-card" href="https://github.com/nlp-saiteja" target="_blank" rel="noopener">
+        <div class="contact-icon">🐙</div>
+        <div class="contact-label">GitHub</div>
+        <div class="contact-val">nlp-saiteja</div>
+      </a>
+      <a class="contact-card" href="tel:+13143390626">
+        <div class="contact-icon">📞</div>
+        <div class="contact-label">Phone</div>
+        <div class="contact-val">+1 (314) 339-0626</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────────────────── -->
+<footer>
+  <p>Leela Phanidhar Sai Teja Nalanagula &nbsp;·&nbsp; St. Louis, MO &nbsp;·&nbsp; Built with vanilla HTML/CSS/JS</p>
+</footer>
+
+<script>
+  // Intersection observer for fade-in animations
+  const observer = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.1 }
+  );
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
